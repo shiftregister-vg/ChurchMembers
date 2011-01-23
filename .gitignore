@@ -1,0 +1,6 @@
+.project
+target/*
+grails-app/WEB-INF/*
+.settings/*
+.classpath
+.redcar
