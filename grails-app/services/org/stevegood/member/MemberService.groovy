@@ -33,8 +33,7 @@ class MemberService {
     }
     
     def deleteMember(Member member){
-        def userMember = UserMember.findByMember(member)
-        if (userMember) userMember.delete(flush:true)
+        UserMember.findByMember(member)?.delete(flush:true)
         member.delete(flush:true)
     }
     
