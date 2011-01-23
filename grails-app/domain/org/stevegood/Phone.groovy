@@ -15,9 +15,6 @@ class Phone {
     
     static constraints = {
         label blank:false
-        npa
-        nxx
-        nxxx
         extension blank:true, nullable:true
     }
     

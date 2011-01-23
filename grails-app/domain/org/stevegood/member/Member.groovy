@@ -24,15 +24,15 @@ class Member {
         "$firstName $lastName"
     }
     
-    Set<Member> getParents(){
+    Set<Member> parents(){
         ParentChild.findAllByChild(this).collect { it.parent } as Set
     }
     
-    Set<Member> getChildren(){
+    Set<Member> children(){
         ParentChild.findAllByParent(this).collect { it.child } as Set
     }
     
-    Member getSpouse(){
+    Member spouse(){
         Member spouse
         def memberSpouse = MemberSpouse.findByMember(this)
         if (!memberSpouse){
@@ -43,4 +43,5 @@ class Member {
         }
         spouse
     }
+    
 }
