@@ -9,9 +9,11 @@ class MemberService {
     static transactional = true
     
     def addChildToParent(Member parent, Member child){
+        ParentChild.create(parent,member)
     }
     
     def addSpouseToMember(Member member, Member spouse){
+        MemberSpouse(member,spouse)
     }
     
     def createAddress(String label, String street1, String street2 = "", String city, String state, String zip){
@@ -48,6 +50,15 @@ class MemberService {
     def removePhoneFromMember(Member member, Phone phone){
         phone.removeFromMembers(member)
         if (!phone.members.length) deletePhone(phone)
+    }
+    
+    def removeChildFromParent(Member parent,Member child){
+        ParentChild.findByParentAndChild(parent,child)?.delete(flush:true)
+    }
+    
+    def removeSpouseFromMember(Member member, Member spouse){
+        def memberSpouse = MemberSpouse.findByMemberAndSpouse(member,spouse) ?: MemberSpouse.findByMemberAndSpouse(spouse,member)
+        memberSpouse.delete(flush:true)
     }
     
     def saveAddress(Address address){
