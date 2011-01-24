@@ -41,6 +41,10 @@ class MemberService {
         phone.delete(flush:true)
     }
     
+    Member getMember(int id){
+        Member.get(id)
+    }
+    
     def removeAddressFromMember(Member member, Address address){
         address.removeFromMembers(member)
         if (!address.members.length) deleteAddress(address)

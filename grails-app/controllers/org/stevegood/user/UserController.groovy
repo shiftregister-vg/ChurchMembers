@@ -18,16 +18,15 @@ class UserController {
     @Secured(['IS_AUTHENTICATED_FULLY'])
     def edit = {
         if (params.password != params.password2){
-            flash.message = "Passwords do not match. Please try again."
-            params=params
+            flash.message = "Passwords do not match. Please try again."            
             redirect(action:"changePassword")
+        } else {            
+            def user = getAuthenticatedUser()
+            user.password = userService.createPassword(params.password)
+            userService.saveUser(user)
+            flash.message = "Password set!"
+            redirect(action:"show")
         }
-        
-        def user = getAuthenticatedUser()
-        user.password = userService.createPassword(params.password)
-        userService.saveUser(user)
-        flash.message = "Password set!"
-        redirect(action:"show")
     }
     
     @Secured(['IS_AUTHENTICATED_FULLY'])

@@ -13,8 +13,16 @@ class UserService {
         UserMember.create(user,member)
     }
     
+    UserRole addRoleToUser(User user, Role role){
+        UserRole.findByUserAndRole(user,role) ?: UserRole.create(user,role)
+    }
+    
+    Role createRole(String authority){
+        Role.findByAuthority(authority) ?: new Role(authority:authority).save(flush:true,insert:true)
+    }
+    
     def createUser(String username, String password) {
-        saveUSer(new User(username:username,password:createPassword(password),enabled:true))
+        saveUser(new User(username:username,password:createPassword(password),enabled:true))
     }
     
     String createPassword(String password){
