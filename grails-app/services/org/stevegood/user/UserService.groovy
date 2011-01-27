@@ -17,8 +17,8 @@ class UserService {
         UserRole.findByUserAndRole(user,role) ?: UserRole.create(user,role)
     }
     
-    Role createRole(String authority){
-        Role.findByAuthority(authority) ?: new Role(authority:authority).save(flush:true,insert:true)
+    Role createRole(String label,String authority){
+        Role.findByAuthority(authority) ?: new Role(label:label,authority:authority).save(flush:true,insert:true)
     }
     
     def createUser(String username, String password) {
@@ -39,6 +39,10 @@ class UserService {
         user.delete(flush:true)
     }
     
+	User getUser(int id){
+		User.get(id)
+	}
+
     User getUser(String username){
         User.findByUsername(username)
     }    

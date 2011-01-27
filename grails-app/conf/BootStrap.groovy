@@ -7,11 +7,15 @@ class BootStrap {
     def userService
     
     def init = { servletContext ->
-        ["ROLE_ADMIN"].each { userService.createRole(it) }
+        [
+			[authority:"ROLE_ADMIN",label:"Admin"],
+			[authority:"ROLE_SUPER_USER",label:"Super User"]
+		].each { userService.createRole(it.label,it.authority) }
         
         if (Environment.current == Environment.DEVELOPMENT){
-            userService.addRoleToUser(userService.createUser("stevegood","password"),Role.findByAuthority("ROLE_ADMIN"))
-            
+            def user = userService.createUser("stevegood","password")
+			userService.addRoleToUser(user,Role.findByAuthority("ROLE_ADMIN"))
+            userService.addRoleToUser(user,Role.findByAuthority("ROLE_SUPER_USER"))
         }
     }
     def destroy = {

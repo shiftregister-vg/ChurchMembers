@@ -8,6 +8,7 @@ class UrlMappings {
 		}
 
 		"/"(view:"/index")
+		"/admin/editUser/$username"(controller:'admin',action:'editUser')
 		"500"(view:'/error')
 	}
 }
