@@ -17,6 +17,10 @@ class UserService {
         UserRole.findByUserAndRole(user,role) ?: UserRole.create(user,role)
     }
     
+    UserRole addRoleToUser(User user, String authority){
+    	addRoleToUser(user,Role.findByAuthority(authority))
+    }
+    
     Role createRole(String label,String authority){
         Role.findByAuthority(authority) ?: new Role(label:label,authority:authority).save(flush:true,insert:true)
     }
@@ -39,6 +43,16 @@ class UserService {
         user.delete(flush:true)
     }
     
+    User getNewestUser(){
+    	def criteria = User.createCriteria()
+    	int maxId = criteria.get{
+    		projections{
+    			max("id")
+    		}
+    	}
+    	User.get(maxId)
+    }
+    
 	User getUser(int id){
 		User.get(id)
 	}
@@ -46,6 +60,10 @@ class UserService {
     User getUser(String username){
         User.findByUsername(username)
     }    
+    
+    def removeAllRolesFromUser(User user){
+    	UserRole.removeAll(user)
+    }
     
     def removeMemberFromUser(User user){
         UserMember.findByUser(user)?.delete(flush:true)

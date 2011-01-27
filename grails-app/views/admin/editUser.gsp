@@ -22,14 +22,21 @@
 						</li>
 					</ul>
 				</div>
+				<g:if test="${ isCurrentUser }">
+					<g:render template="/user/changePasswordFields" />
+				</g:if>
 				<div class="post">
 					<h2>Roles</h2>
 					<ul>
-						<g:set var="authorities" value="${ user.getAuthorities().collect { it.authority } }" />
 						<g:each in="${roleList}" var="role">
 							<li>
-								<g:checkBox name="${ role.authority }" value="${ true }" checked="${ authorities.contains(role.authority) }" />
-								<label for="${ role.authority }">${role}</label>
+								<g:if test="${ !isCurrentUser }">
+									<g:checkBox name="selectedRole" value="${ role.authority }" checked="${ user.getAuthorities().contains(role) }" />
+									<label class="inline" for="${ role.authority }">${role}</label>
+								</g:if>
+								<g:else>
+									${role}
+								</g:else>
 							</li>
 						</g:each>					
 					</ul>

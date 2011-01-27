@@ -10,7 +10,8 @@ class Role {
 	}
 
 	static constraints = {
-		authority blank: false, unique: true
+		authority blank: false, unique: true 
+		label blank:false
 	}
 	
 	String toString(){

@@ -21,7 +21,7 @@ class MemberService {
     }
     
     def createMember(String firstName, String lastName, Date dob, String email) {
-        Member.findByFirstNameAndLastNameAndDob(firstName,lastName,dob) ?: saveMember(new Member(firstName:firstName,lastName:lastName,dob:dob,email:email))
+        Member.findWhere(firstName:firstName,lastName:lastName,dob:dob) ?: saveMember(new Member(firstName:firstName,lastName:lastName,dob:dob,email:email))
     }
     
     def createPhone(String label, int npa, int nxx, int nxxx, String extension){
@@ -43,6 +43,16 @@ class MemberService {
     
     Member getMember(int id){
         Member.get(id)
+    }
+    
+    Member getNewestMember(){
+    	def criteria = Member.createCriteria()
+    	int maxId = criteria.get{
+    		projections{
+    			max("id")
+    		}
+    	}
+    	Member.get(maxId)
     }
     
     def removeAddressFromMember(Member member, Address address){
@@ -69,7 +79,8 @@ class MemberService {
     }
     
     def saveMember(Member member){
-        member.save()
+        member.dateUpdated = new Date()
+    	member.save(failOnError:true)
     }
     
     def savePhone(Phone phone){

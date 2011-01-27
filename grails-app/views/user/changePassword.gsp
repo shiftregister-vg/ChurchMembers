@@ -4,11 +4,16 @@
     <meta name="layout" content="main" />
 </head>
 <body>
-    <h1>Change Password for ${user}</h1>
-    <form id="changePasswordForm" method="post" action="${ createLink(action:'edit') }">
-        <input type="password" name="password" />
-        <input type="password" name="password2" />
-        <input type="submit" value="Submit" />
-    </form>
+	<div id="content">
+	    <div class="post">
+	    	<h2>${ user }</h2>
+	    </div>
+	    <form id="changePasswordForm" method="post" action="${ createLink(action:'edit') }">
+	        <g:render template="/user/changePasswordFields" />
+	        <input type="submit" value="Save" />
+	    </form>
+	</div>
+	
+	<div id="sidebar"></div>
 </body>
 </html>

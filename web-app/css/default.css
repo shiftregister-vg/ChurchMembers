@@ -295,3 +295,6 @@ img.right {
 #login .inner .text_ {width:120px;}
 #login .inner .chk {height:12px;float:left;}
 #login .inner .submit {float:right;}
+
+label { display:block; }
+.inline { display:inline; }

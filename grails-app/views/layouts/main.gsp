@@ -32,6 +32,9 @@ Released   : 20071001
 		    <sec:ifLoggedIn>
 			    <g:link controller="logout">Logout</g:link>
 				&nbsp;::&nbsp;<g:link controller="user" action="show">Profile</g:link>
+				<sec:ifAnyGranted roles="ROLE_ADMIN,ROLE_SUPER_USER">
+					&nbsp;::&nbsp;<g:link controller="admin">Admin</g:link>
+				</sec:ifAnyGranted>
 		    </sec:ifLoggedIn>
 		  </p>
 		</div>
@@ -41,11 +44,8 @@ Released   : 20071001
 		    <li class="current_page_item"><g:link controller="login">Login</g:link></li>
 		    </sec:ifNotLoggedIn>
 		    <sec:ifLoggedIn>
-		  		<li class="current_page_item"><a href="#">All Members</a></li>
-		  		<li><a href="#">Add Member</a></li>
-		      <!--li><a href="#">Services</a></li>
-		  		<li><a href="#">About Us</a></li>
-		  		<li><a href="#">Contact Us</a></li-->
+		  		<li class="${ params.controller == 'member' && params.action == 'list' ? 'current_page_item' : '' }"><g:link controller="member" action="list">All Members</g:link></li>
+		  		<li class="${ params.controller == 'member' && params.action == 'create' ? 'current_page_item' : '' }"><g:link controller="member" action="create">Add Member</g:link></li>
 		    </sec:ifLoggedIn>
 		  </ul>
 		</div>
