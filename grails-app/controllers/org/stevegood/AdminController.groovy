@@ -16,7 +16,7 @@ class AdminController {
 	def userService
 	
     def index = {
-    	[memberCount:Member.count(),userCount:User.count(),newestUser:userService.getNewestUser(),newestMember:memberService.getNewestMember()]
+    	[memberCount:Member.count(),userCount:userService.getActiveUserCount(),newestUser:userService.getNewestUser(),newestMember:memberService.getNewestMember()]
     }
 	
 	@Secured(['ROLE_SUPER_USER'])

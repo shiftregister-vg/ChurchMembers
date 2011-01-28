@@ -26,7 +26,7 @@ class UserService {
     }
     
     def createUser(String username, String password) {
-        saveUser(new User(username:username,password:createPassword(password),enabled:true))
+        saveUser(new User(username:username,password:createPassword(password),enabled:false))
     }
     
     String createPassword(String password){
@@ -46,11 +46,20 @@ class UserService {
     User getNewestUser(){
     	def criteria = User.createCriteria()
     	int maxId = criteria.get{
+    		eq("enabled",true)
     		projections{
     			max("id")
     		}
     	}
     	User.get(maxId)
+    }
+    
+    def getActiveUserCount(){
+    	def c = User.createCriteria()
+    	def results = c.list{
+    		eq("enabled",true)
+    	}
+    	results.size()
     }
     
 	User getUser(int id){
@@ -73,5 +82,9 @@ class UserService {
     
     User saveUser(User user){
         user.save(flush:true)
+    }
+    
+    boolean userExists(String username){
+    	User.findByUsername(username) ? true : false
     }
 }

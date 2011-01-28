@@ -16,6 +16,7 @@ class BootStrap {
         
         if (Environment.current == Environment.DEVELOPMENT || User.count() == 0){
             def user = userService.createUser("admin","admin")
+            userService.enableDisableUser(user)
 			userService.addRoleToUser(user,Role.findByAuthority("ROLE_ADMIN"))
             userService.addRoleToUser(user,Role.findByAuthority("ROLE_SUPER_USER"))
             

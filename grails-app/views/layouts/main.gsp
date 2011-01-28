@@ -28,6 +28,7 @@ Released   : 20071001
 		  <p>
 		    <sec:ifNotLoggedIn>
 		      <g:link controller="login">Login</g:link>
+		      &nbsp;::&nbsp;<g:link controller="registration" action="register">Register</g:link>
 		    </sec:ifNotLoggedIn>
 		    <sec:ifLoggedIn>
 			    <g:link controller="logout">Logout</g:link>
