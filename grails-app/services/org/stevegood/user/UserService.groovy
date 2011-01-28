@@ -62,7 +62,9 @@ class UserService {
     }    
     
     def removeAllRolesFromUser(User user){
-    	UserRole.removeAll(user)
+    	user.getAuthorities().each{ role ->
+			UserRole.remove(user,role,true)
+		}
     }
     
     def removeMemberFromUser(User user){

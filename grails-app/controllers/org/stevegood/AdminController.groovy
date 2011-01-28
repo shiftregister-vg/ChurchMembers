@@ -52,7 +52,15 @@ class AdminController {
 			flash.message = "Invalid user."
 			redirect(action:'index')
 		} else {
+			def checkUser = userService.getUser(params.username)
+			if (checkUser && user.username != params.username){
+				flash.message = "Username is already taken, please choose another."
+				redirect(action:'editUser',params:[username:user.username])
+				return
+			}
+			
 			user.username = params.username
+			user.enabled = params.enabled ?: false
 			
 			if (params?.password1 != params?.password2){
 				flash.message = "Passwords do not match. Please try again."
@@ -63,23 +71,55 @@ class AdminController {
 					user.password = userService.createPassword(params.password1)
 				}
 			}
-						
+				
 			userService.saveUser(user)
 			
-			if ( (user.getAuthorities().sort { it.label }.collect{ it.authority } != params?.selectedRole) && (user != springSecurityService.getCurrentUser()) ){
+			if ( (user.getAuthorities().sort { it.label }.collect{ it.authority } != params?.selectedRole) && (user != springSecurityService.getCurrentUser()) && params?.selectedRole ){
+				
 				userService.removeAllRolesFromUser(user)
-				if (params?.selectedRole instanceof java.util.List){
-					params?.selectedRole?.each{
+				
+				if (params.selectedRole.class.isArray()){
+					params.selectedRole.each{
 						userService.addRoleToUser(user,it)
 					}
+				
 				} else {
+				
 					userService.addRoleToUser(user,params?.selectedRole)
+				
 				}
 			}
 			
 			flash.message = "$user saved"
 			redirect(action:'editUser',params:[username:user.username])
 		}
+	}
+	
+	def addUser = {
+		
+	}
+	
+	def createUser = {
+		if (params.password1 != params.password2){
+			flash.message = "Passwords do not match. Please try again."
+			redirect(action:'addUser',params:[username:params.username])
+			return
+		}
+		
+		def user = userService.getUser(params.username)
+		if (user){
+			flash.message = "Username is already taken, please choose another."
+			redirect(action:'addUser',params:[username:params.username])
+			return
+		}
+		user = userService.createUser(params.username,params.password1)
+		if (!user){
+			flash.message = "Uh oh! Something went wrong when trying to save the user. Try your request again or contact the administrator."
+			redirect(action:'addUser',params:[username:params.username])
+			return
+		}
+		flash.message = "$user has been created!"
+		redirect(action:'editUser',params:[username:params.username])
 	}
 	
 }

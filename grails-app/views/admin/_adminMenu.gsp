@@ -9,7 +9,7 @@
 	<li>
 		<h2>Users</h2>
 		<ul>
-			<li>Add</li>
+			<li><g:link action="addUser">Add</g:link></li>
 			<li><g:link action="listUsers" controller="admin">List</g:link></li>
 		</ul>
 	</li>

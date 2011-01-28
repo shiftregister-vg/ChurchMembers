@@ -3,11 +3,11 @@
 	<ul>
 		<li>
 			<label for="password1">Password</label>
-			<g:textField name="password1" />
+			<g:passwordField name="password1" />
 		</li>
 		<li>
 			<label for="password2">Repeat Password</label>
-			<g:textField name="password2" />
+			<g:passwordField name="password2" />
 		</li>
 	</ul>
 </div>

@@ -28,17 +28,33 @@
 				<div class="post">
 					<h2>Roles</h2>
 					<ul>
-						<g:each in="${roleList}" var="role">
-							<li>
-								<g:if test="${ !isCurrentUser }">
+						<g:if test="${ !isCurrentUser }">
+							<g:each in="${roleList}" var="role">
+								<li>
 									<g:checkBox name="selectedRole" value="${ role.authority }" checked="${ user.getAuthorities().contains(role) }" />
 									<label class="inline" for="${ role.authority }">${role}</label>
-								</g:if>
-								<g:else>
-									${role}
-								</g:else>
-							</li>
-						</g:each>					
+								</li>
+							</g:each>
+						</g:if>
+						<g:else>
+							<g:each in="${ user.getAuthorities().sort{ it.label } }" var="role">
+								<li>${role.label}</li>
+							</g:each>
+						</g:else>
+					</ul>
+				</div>
+				<div class="post">
+					<h2>Access</h2>
+					<ul>
+						<li>
+							<g:if test="${ !isCurrentUser }">
+								<g:checkBox name="enabled" value="${true}" checked="${ user.enabled }" />
+								<label class="inline">Enabled</label>
+							</g:if>
+							<g:else>
+								${ user.enabled ? "Enabled" : "Disabled" }
+							</g:else>
+						</li>
 					</ul>
 				</div>
 				<div>
