@@ -33,15 +33,14 @@ class Member {
     }
     
     Member spouse(){
-        Member spouse
-        def memberSpouse = MemberSpouse.findByMember(this)
+        MemberSpouse.findByMember(this)?.spouse ?: MemberSpouse.findBySpouse(this)?.member
+        /*def memberSpouse = MemberSpouse.findByMember(this)
         if (!memberSpouse){
             memberSpouse = MemberSpouse.findBySpouse(this)
             spouse = memberSpouse.member
         } else {
             spouse = memberSpouse.spouse
-        }
-        spouse
+        }*/
     }
     
 }

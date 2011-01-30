@@ -4,6 +4,7 @@ import grails.plugins.springsecurity.Secured
 import grails.plugins.springsecurity.SpringSecurityService
 import org.stevegood.member.Member
 import org.stevegood.member.MemberService
+import org.stevegood.registration.RegistrationRequest
 import org.stevegood.user.Role
 import org.stevegood.user.User
 import org.stevegood.user.UserService
@@ -16,13 +17,19 @@ class AdminController {
 	def userService
 	
     def index = {
-    	[memberCount:Member.count(),userCount:userService.getActiveUserCount(),newestUser:userService.getNewestUser(),newestMember:memberService.getNewestMember()]
+    	[	memberCount:Member.count(),
+			userCount:userService.getActiveUserCount(),
+			newestUser:userService.getNewestUser(),
+			newestMember:memberService.getNewestMember(),
+			pendingRegistrationRequests:userService.getPendingRegistrationRequests(),
+			pendingRegistrationRequestsCount:RegistrationRequest.countByApprovedAndRejected(false,false)	]
     }
 	
 	@Secured(['ROLE_SUPER_USER'])
 	def listUsers = {
 		params.max = Math.min(params.max ? params.int('max') : 10, 100)
-        [userList: User.list(params), userTotal: User.count()]
+		def userList = User.list(params) - RegistrationRequest.findWhere(rejected:true).collect { it.user }
+        [userList:userList , userTotal: User.count()]
 	}
 	
 	@Secured(['ROLE_SUPER_USER'])
@@ -120,6 +127,11 @@ class AdminController {
 		}
 		flash.message = "$user has been created!"
 		redirect(action:'editUser',params:[username:params.username])
+	}
+	
+	def listRejectedUsers = {
+		def registrationRequests = RegistrationRequest.findWhere(rejected:true)
+		[registrationRequests:registrationRequests]
 	}
 	
 }

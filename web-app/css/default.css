@@ -264,6 +264,12 @@ div.errors {
     margin: 10px 0 5px 0;
     padding: 5px 0 5px 0;
 }
+
+li.not_approved a {
+	color: #cc0000;
+	font-weight:bold;
+}
+
 div.errors ul {
     list-style: none;
     padding: 0;

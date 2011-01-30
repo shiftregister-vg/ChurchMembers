@@ -12,7 +12,9 @@ class UserController {
     
     @Secured(['IS_AUTHENTICATED_FULLY'])
     def show = {
-        [user:getAuthenticatedUser()]
+		def user = getAuthenticatedUser()
+		def member = userService.getUserMember(user)
+        [user:user,member:member]
     }
     
     @Secured(['IS_AUTHENTICATED_FULLY'])

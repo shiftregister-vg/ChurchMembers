@@ -2,6 +2,7 @@ package org.stevegood.user
 
 import grails.plugins.springsecurity.SpringSecurityService
 import org.stevegood.member.Member
+import org.stevegood.registration.RegistrationRequest
 
 class UserService {
 
@@ -62,13 +63,21 @@ class UserService {
     	results.size()
     }
     
+	def getPendingRegistrationRequests(){
+		RegistrationRequest.findWhere(approved:false,rejected:false)
+	}
+
 	User getUser(int id){
 		User.get(id)
 	}
 
     User getUser(String username){
         User.findByUsername(username)
-    }    
+    }
+ 	
+	Member getUserMember(def user){
+		UserMember.findByUser(user)?.member
+	}
     
     def removeAllRolesFromUser(User user){
     	user.getAuthorities().each{ role ->

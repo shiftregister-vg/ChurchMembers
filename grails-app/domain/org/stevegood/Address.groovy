@@ -4,7 +4,8 @@ import org.stevegood.member.Member
 
 class Address {
     
-    String street1
+    String label
+	String street1
     String street2
     String city
     String state
@@ -14,7 +15,8 @@ class Address {
     static hasMany = [members:Member]
     
     static constraints = {
-        street1 blank:false
+        label blank:false
+		street1 blank:false
         street2 blank:true, nullable:true
         city blank:false
         state blank:false

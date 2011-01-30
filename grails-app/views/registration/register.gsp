@@ -31,6 +31,18 @@
 							<g:passwordField name="password2" />
 						</li>
 					</ul>
+					<h2>Member</h2>
+					<ul>
+						<select name="memberid">
+							<option value="0">Select your Member Record</option>
+							<option value="0">Not listed...</option>
+							<optgroup label="---------">
+								<g:each in="${ availableMembers }" var="member">
+									<option value="${ member.id }">${ member }</option>
+								</g:each>
+							</optgroup>
+						</select>
+					</ul>
 					<g:submitButton name="submit" value="Submit Request" /> 
 				</g:form>
 			</div>

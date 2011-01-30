@@ -1,4 +1,5 @@
 <%@ page import="org.stevegood.user.User" %>
+<%@ page import="org.stevegood.registration.RegistrationRequest" %>
 
 <html>
 	<head>
@@ -13,7 +14,16 @@
 				<h2>Users List</h2>
 				<ul>
 					<g:each in="${userList}" var="user">
-						<li><g:link action="editUser" params="[username:user]">${ user }</g:link></li>
+						<g:set var="registrationRequest" value="${ RegistrationRequest.findByUser(user) }" />
+						<g:set var="isApproved" value="${ (registrationRequest && !registrationRequest?.approved) ? false : true }" />
+						<li class="${ isApproved ? '' : 'not_approved'}">
+							<g:if test="${ isApproved }">
+								<g:link action="editUser" params="[username:user]">${ user }</g:link>
+							</g:if>
+							<g:else>
+								<g:link controller="registration" action="processRequest" id="${ registrationRequest.id }">${ user }</g:link>
+							</g:else>
+						</li>
 					</g:each>
 				</ul>
 			</div>

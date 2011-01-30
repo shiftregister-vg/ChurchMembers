@@ -9,14 +9,13 @@ class RegistrationRequest {
 	User user
 	Member member
 	boolean approved = false
+	boolean rejected = false
 	
 	Date dateCreated
-	Date dateUpdated
 	
     static constraints = {
     	email blank:false, email:true
     	member nullable:true
-    	dateUpdated nullable:true
     }
     
     static RegistrationRequest create(String email,User user, Member member){

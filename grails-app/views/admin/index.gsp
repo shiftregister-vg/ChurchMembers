@@ -17,6 +17,17 @@
 				</ul>
 			</div>
 			
+			<g:if test="${ pendingRegistrationRequests }">
+				<div class="post">
+					<h2>${ pendingRegistrationRequestsCount } Pending Registration Requests</h2>
+					<ul>
+						<g:each in="${ pendingRegistrationRequests }" var="registrationRequest">
+							<li><g:link controller="registration" action="processRequest" id="${ registrationRequest.id }">${ registrationRequest.user }</g:link></li>
+						</g:each>
+					</ul>
+				</div>
+			</g:if>
+			
 		</div>
 		
 		<div id="sidebar">

@@ -4,10 +4,35 @@
     <meta name="layout" content="main" />
 </head>
 <body>
-    <h1>${user}</h1>
-	<div>
-		<li><g:link action="changePassword">Change Password</g:link></li>
-		 | <li><g:link controller="logout">Logout</g:link></li>
+	
+	<div id="content">
+		
+		<div class="post">
+			<h2>${ member ? "$member ($user)" : user }</h2>
+			<ul>
+				<li>Username: <strong>${ user }</strong></li>
+			</ul>
+			<g:if test="${ member }">
+				<g:render template="/member/details" />
+			</g:if>
+		</div>
+		
 	</div>
+	
+	<div id="sidebar">
+		<ul>
+			<li>
+				<h2>Actions</h2>
+				<ul>
+					<li><g:link action="changePassword">Change Password</g:link></li>
+					<g:if test="${ member }">
+						<li>Edit Member Info</li>
+						<li>Unlink Member Info</li>
+					</g:if>
+				</ul>
+			</li>
+		</ul>
+	</div>
+	
 </body>
 </html>
