@@ -1,6 +1,7 @@
 package org.stevegood.member
 
 import grails.plugins.springsecurity.Secured
+import grails.plugins.springsecurity.SpringSecurityService
 
 @Secured(['IS_AUTHENTICATED_FULLY'])
 class MemberController {
@@ -8,6 +9,7 @@ class MemberController {
     static allowedMethods = [save: "POST", update: "POST", delete: "POST"]
     
     def memberService
+    def springSecurityService
     
     def index = {
         redirect(action: "list", params: params)
@@ -101,5 +103,16 @@ class MemberController {
             flash.message = "${message(code: 'default.not.found.message', args: [message(code: 'member.label', default: 'Member'), params.id])}"
             redirect(action: "list")
         }
+    }
+    
+    def editLinked = {
+    	def member = memberService.getMember(springSecurityService.getCurrentUser())
+    	if (!member){
+    		flash.message = "No linked member for this account"
+    		redirect(controller:"user",action:"show")
+    		return
+    	}
+    	
+    	[member:member,memberList:memberService.getEligableSpouses(member)]
     }
 }

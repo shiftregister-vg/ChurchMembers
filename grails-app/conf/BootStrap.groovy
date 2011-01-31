@@ -20,7 +20,13 @@ class BootStrap {
 			userService.addRoleToUser(user,Role.findByAuthority("ROLE_ADMIN"))
             userService.addRoleToUser(user,Role.findByAuthority("ROLE_SUPER_USER"))
             
-            def member = memberService.createMember("Chester","Tester",new Date().parse("MM/dd/yyyy","01/01/0001"),"chester@tester.com")
+            def member = memberService.createMember("Chester","Tester",new Date().parse("MM/dd/yyyy","01/01/1979"),"chester@tester.com")
+            
+            // TODO: REMOVE FROM BUILD
+            user = userService.createUser("chester","tester")
+            user.enabled = true
+            userService.saveUser(user)
+            userService.addMemberToUser(user,member)
         }
     }
     def destroy = {

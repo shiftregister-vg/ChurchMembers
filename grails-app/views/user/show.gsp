@@ -26,7 +26,7 @@
 				<ul>
 					<li><g:link action="changePassword">Change Password</g:link></li>
 					<g:if test="${ member }">
-						<li>Edit Member Info</li>
+						<li><g:link controller="member" action="editLinked">Edit Member Info</g:link></li>
 						<li>Unlink Member Info</li>
 					</g:if>
 				</ul>

@@ -2,6 +2,7 @@ package org.stevegood.member
 
 import org.stevegood.Address
 import org.stevegood.Phone
+import org.stevegood.user.User
 import org.stevegood.user.UserMember
 
 class MemberService {
@@ -41,8 +42,18 @@ class MemberService {
         phone.delete(flush:true)
     }
     
+    def getEligableSpouses(Member member){
+    	def members = Member.list() - member
+    	members = members - member.children()
+    	members = members - member.parents()
+    }
+    
     Member getMember(int id){
         Member.get(id)
+    }
+    
+    Member getMember(User user){
+    	UserMember.findByUser(user)?.member
     }
     
     Member getNewestMember(){
