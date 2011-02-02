@@ -28,7 +28,7 @@ class AdminController {
 	@Secured(['ROLE_SUPER_USER'])
 	def listUsers = {
 		params.max = Math.min(params.max ? params.int('max') : 10, 100)
-		def userList = User.list(params) - RegistrationRequest.findWhere(rejected:true).collect { it.user }
+		def userList = User.list(params) - RegistrationRequest.findWhere(rejected:true)*.user
         [userList:userList , userTotal: User.count()]
 	}
 	
@@ -46,7 +46,7 @@ class AdminController {
 		
 		def isCurrentUser = user == springSecurityService.getCurrentUser()
 		
-		[user:user,roleList:Role.list().sort{ it.label },isCurrentUser:isCurrentUser]
+		[user:user,roleList:Role.list().sort{ it.label },isCurrentUser:isCurrentUser,member:userService.getUserMember(user),membersList:memberService.getAvailableMembers()]
 	}
 	
 	@Secured(['ROLE_SUPER_USER'])
@@ -81,19 +81,21 @@ class AdminController {
 				
 			userService.saveUser(user)
 			
-			if ( (user.getAuthorities().sort { it.label }.collect{ it.authority } != params?.selectedRole) && (user != springSecurityService.getCurrentUser()) && params?.selectedRole ){
+			if ( (user.getAuthorities().sort { it.label }*.authority != params?.selectedRole) && (user != springSecurityService.getCurrentUser())){
 				
 				userService.removeAllRolesFromUser(user)
 				
-				if (params.selectedRole.class.isArray()){
-					params.selectedRole.each{
-						userService.addRoleToUser(user,it)
+				if (params?.selectedRole){
+					if (params.selectedRole.class.isArray()){
+						params.selectedRole.each{
+							userService.addRoleToUser(user,it)
+						}
+				
+					} else {
+				
+						userService.addRoleToUser(user,params?.selectedRole)
+				
 					}
-				
-				} else {
-				
-					userService.addRoleToUser(user,params?.selectedRole)
-				
 				}
 			}
 			
@@ -132,6 +134,23 @@ class AdminController {
 	def listRejectedUsers = {
 		def registrationRequests = RegistrationRequest.findWhere(rejected:true)
 		[registrationRequests:registrationRequests]
+	}
+	
+	@Secured(['ROLE_ADMIN'])
+	def linkMember = {
+		def member = memberService.getMember(params?.memberid as int)
+		def user = userService.getUser(params?.userid as int)
+		userService.addMemberToUser(user,member)
+		flash.message = "${member} has been linked to ${user}"
+		redirect(action:"editUser",params:[username:user.username])
+	}
+	
+	@Secured(['ROLE_ADMIN'])
+	def unlinkMember = {
+		def user = userService.getUser(params?.userid as int)
+		userService.removeMemberFromUser(user)
+		flash.message = "Unlinked member record from ${ user }"
+		redirect(action:"editUser",params:[username:user.username])
 	}
 	
 }

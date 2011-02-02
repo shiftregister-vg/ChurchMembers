@@ -25,11 +25,11 @@ class Member {
     }
     
     Set<Member> parents(){
-        ParentChild.findAllByChild(this).collect { it.parent } as Set
+        ParentChild.findAllByChild(this)*.parent as Set
     }
     
     Set<Member> children(){
-        ParentChild.findAllByParent(this).collect { it.child } as Set
+        ParentChild.findAllByParent(this)*.child as Set
     }
     
     Member spouse(){

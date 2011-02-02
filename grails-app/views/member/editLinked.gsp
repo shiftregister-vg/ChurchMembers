@@ -11,7 +11,10 @@
 			
 			<div class="post">
 				<h2>Edit Linked Member Details</h2>
-				<g:render template="/member/editMemberFields" />
+				<g:form action="saveLinked">
+					<g:render template="/member/editMemberFields" />
+					<g:submitButton name="submit" value="Save" />
+				</g:form>
 			</div>
 			
 		</div>

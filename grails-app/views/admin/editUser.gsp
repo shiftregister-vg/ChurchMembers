@@ -56,15 +56,41 @@
 							</g:else>
 						</li>
 					</ul>
-				</div>
-				<div>
-					<g:submitButton name="update" value="Update" />
+					<div class="buttons">
+						<span class="button">
+							<g:submitButton name="update" value="Save User" class="save" />
+						</span>
+					</div>
 				</div>
 			</g:form>
+			<g:if test="${ member }">
+				<div class="post">
+					<h2>Linked Member Details</h2>
+					<g:render template="/member/details" />
+				</div>
+			</g:if>
 		</div>
 		
 		<div id="sidebar">
 			<g:render template="/admin/adminMenu" />
+			<ul>
+				<li>
+					<h2>Linked Member</h2>
+					<ul>
+						<li>
+							<g:if test="${ member }">
+								<g:link action="unlinkMember" params="[userid:user.id]">Unlink Member Info</g:link>
+							</g:if>
+							<g:else>
+								<g:form action="linkMember">
+									<g:hiddenField name="userid" value="${ user.id }" />
+									<g:render template="/user/linkMemberFormFields" />
+								</g:form>
+							</g:else>
+						</li>
+					</ul>
+				</li>
+			</ul>
 		</div>
 		
 	</body>

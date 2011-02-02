@@ -17,7 +17,7 @@ class RegistrationController {
     
     def register = {
     	// create a new collection of members who are NOT associated to a User
-		def availableMembers = Member.list() - UserMember.list().collect { it.member }
+		def availableMembers = memberService.getAvailableMembers()
 		[availableMembers:availableMembers]
     }
     

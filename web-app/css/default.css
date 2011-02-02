@@ -229,6 +229,10 @@ img.right {
 	text-decoration: underline;
 }
 
+#sidebar select {
+	width:125px;
+}
+
 /* Footer */
 
 #footer {

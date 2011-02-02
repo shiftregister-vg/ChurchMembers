@@ -2,6 +2,7 @@ package org.stevegood.member
 
 import grails.plugins.springsecurity.Secured
 import grails.plugins.springsecurity.SpringSecurityService
+import org.stevegood.user.UserMember
 
 @Secured(['IS_AUTHENTICATED_FULLY'])
 class MemberController {
@@ -105,6 +106,7 @@ class MemberController {
         }
     }
     
+	@Secured(['IS_AUTHENTICATED_FULLY'])
     def editLinked = {
     	def member = memberService.getMember(springSecurityService.getCurrentUser())
     	if (!member){
@@ -113,6 +115,38 @@ class MemberController {
     		return
     	}
     	
-    	[member:member,memberList:memberService.getEligableSpouses(member)]
+    	[member:member,memberList:memberService.getEligableSpouses(member),childrenList:memberService.getValidChildren(member),parentsList:memberService.getValidParents(member)]
     }
+	
+	@Secured(['IS_AUTHENTICATED_FULLY'])
+	def saveLinked = {
+		def member = Member.get(UserMember.findByUser(springSecurityService.getCurrentUser()).id) ?: new Member()
+		member.properties = params
+		memberService.saveMember(member)
+		
+		memberService.removeSpouseFromMember(member)
+		def spouse = Member.get(params?.spouse)
+		if (spouse){
+			memberService.addSpouseToMember(member,spouse)
+		}
+		
+		memberService.removeAllChildrenFromMember(member)
+		params?.children?.each { childid ->
+			def child = Member.get(childid)
+			if (child){
+				memberService.addChildToParent(member,child)
+			}
+		}
+		
+		memberService.removeAllParentsFromMember(member)
+		params?.parents?.each { parentid ->
+			def parent = Member.get(parentid)
+			if (parent){
+				memberService.addChildToParent(parent,member)
+			}
+		}
+		
+		flash.message = "$member saved!"
+		redirect(action:'editLinked')
+	}
 }

@@ -15,8 +15,32 @@
 		<label for="dob">Date of Birth</label>
 		<g:datePicker name="dob" value="${ member?.dob }" precision="day" />
 	</li>
+</ul>
+<ul>
 	<li>
 		<label for="spouse">Spouse</label>
-		<g:select name="spouse" from="${ memberList }" optionKey="id" value="${memberList*.id}" />
+		<select id="spouse" name="spouse">
+			<option value="0">No Spouse</option>
+			<g:set var="spouse" value="${ member.spouse() }" />
+			<g:each in="${ memberList }" var="mSpouse">
+				<option value="${ mSpouse.id }" ${ (mSpouse == spouse) ? 'selected=selected' : '' } >${ mSpouse }</option>
+			</g:each>
+		</select>
+	</li>
+	<li>
+		<label for="children">Children</label>
+		<select name="children" id="children" multiple="true">
+			<g:each in="${ childrenList }" var="child">
+				<option value="${ child.id }" ${ child.id in member.children()*.id ? 'selected=selected' : '' } >${ child }</option>
+			</g:each>
+		</select>
+	</li>
+	<li>
+		<label for="parents">Parents</label>
+		<select name="parents" id="parents" multiple="true">
+			<g:each in="${ parentsList }" var="parent">
+				<option value="${ parent.id }" ${ parent.id in member.parents()*.id ? 'selected=selected' : '' } >${ parent }</option>
+			</g:each>
+		</select>
 	</li>
 </ul>
