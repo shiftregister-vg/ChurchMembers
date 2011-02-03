@@ -51,6 +51,13 @@
                         </tr>
                     
                         <tr class="prop">
+                            <td valign="top" class="name"><g:message code="member.gender.label" default="Gender" /></td>
+                            
+                            <td valign="top" class="value">${memberInstance?.gender?.encodeAsHTML()}</td>
+                            
+                        </tr>
+                    
+                        <tr class="prop">
                             <td valign="top" class="name"><g:message code="member.addresses.label" default="Addresses" /></td>
                             
                             <td valign="top" style="text-align: left;" class="value">
@@ -71,16 +78,16 @@
                         </tr>
                     
                         <tr class="prop">
-                            <td valign="top" class="name"><g:message code="member.dateUpdated.label" default="Date Updated" /></td>
+                            <td valign="top" class="name"><g:message code="member.dob.label" default="Dob" /></td>
                             
-                            <td valign="top" class="value"><g:formatDate date="${memberInstance?.dateUpdated}" /></td>
+                            <td valign="top" class="value"><g:formatDate date="${memberInstance?.dob}" /></td>
                             
                         </tr>
                     
                         <tr class="prop">
-                            <td valign="top" class="name"><g:message code="member.dob.label" default="Dob" /></td>
+                            <td valign="top" class="name"><g:message code="member.lastUpdated.label" default="Last Updated" /></td>
                             
-                            <td valign="top" class="value"><g:formatDate date="${memberInstance?.dob}" /></td>
+                            <td valign="top" class="value"><g:formatDate date="${memberInstance?.lastUpdated}" /></td>
                             
                         </tr>
                     

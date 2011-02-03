@@ -21,8 +21,8 @@ class MemberService {
         Address.findWhere(street1:street1,street2:street2,city:city,state:state,zip:zip) ?: saveAddress(new Address(street1:street1,street2:street2,city:city,state:state,zip:zip))
     }
     
-    def createMember(String firstName, String lastName, Date dob, String email) {
-        Member.findWhere(firstName:firstName,lastName:lastName,dob:dob) ?: saveMember(new Member(firstName:firstName,lastName:lastName,dob:dob,email:email))
+    def createMember(String firstName, String lastName, Date dob, String email,Gender gender) {
+		Member.findWhere(firstName:firstName,lastName:lastName,dob:dob,gender:gender) ?: saveMember(new Member(firstName:firstName,lastName:lastName,dob:dob,email:email,gender:gender))
     }
     
     def createPhone(String label, int npa, int nxx, int nxxx, String extension){
@@ -121,8 +121,7 @@ class MemberService {
     }
     
     def saveMember(Member member){
-        member.dateUpdated = new Date()
-    	member.save(failOnError:true)
+		member.save(failOnError:true)
     }
     
     def savePhone(Phone phone){

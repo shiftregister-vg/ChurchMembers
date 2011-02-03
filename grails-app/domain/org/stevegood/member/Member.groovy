@@ -9,8 +9,9 @@ class Member {
     String lastName
     String email
     Date dob
+	Gender gender
     Date dateCreated
-    Date dateUpdated
+    Date lastUpdated
     
     static hasMany = [addresses:Address,phones:Phone]
     
@@ -18,6 +19,7 @@ class Member {
         firstName   blank:false
         lastName    blank:false
         email       blank:true,email:true
+		gender		nullable:false
     }
     
     String toString(){
@@ -34,13 +36,6 @@ class Member {
     
     Member spouse(){
         MemberSpouse.findByMember(this)?.spouse ?: MemberSpouse.findBySpouse(this)?.member
-        /*def memberSpouse = MemberSpouse.findByMember(this)
-        if (!memberSpouse){
-            memberSpouse = MemberSpouse.findBySpouse(this)
-            spouse = memberSpouse.member
-        } else {
-            spouse = memberSpouse.spouse
-        }*/
     }
     
 }

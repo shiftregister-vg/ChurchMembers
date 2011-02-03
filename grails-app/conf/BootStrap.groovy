@@ -1,4 +1,5 @@
 import grails.util.Environment
+import org.stevegood.member.Gender
 import org.stevegood.member.MemberService
 import org.stevegood.user.Role
 import org.stevegood.user.UserService
@@ -20,10 +21,10 @@ class BootStrap {
 			userService.addRoleToUser(user,Role.findByAuthority("ROLE_ADMIN"))
             userService.addRoleToUser(user,Role.findByAuthority("ROLE_SUPER_USER"))
             
-            def chester = memberService.createMember("Chester","Tester",new Date().parse("MM/dd/yyyy","01/01/1979"),"chester@tester.com")
-			def hester = memberService.createMember("Hester","Tester",new Date().parse("MM/dd/yyyy","01/01/1981"),"hester@tester.com")
+            def chester = memberService.createMember("Chester","Tester",new Date().parse("MM/dd/yyyy","01/01/1979"),"chester@tester.com",Gender.MALE)
+			def hester = memberService.createMember("Hester","Tester",new Date().parse("MM/dd/yyyy","01/01/1981"),"hester@tester.com",Gender.FEMALE)
 			memberService.addSpouseToMember(chester,hester)
-            def lester = memberService.createMember("Lester","Tester",new Date().parse("MM/dd/yyyy","01/01/2005"),"lester@tester.com")
+            def lester = memberService.createMember("Lester","Tester",new Date().parse("MM/dd/yyyy","01/01/2005"),"lester@tester.com",Gender.MALE)
 			memberService.addChildToParent(chester,lester)
 			memberService.addChildToParent(hester,lester)
 

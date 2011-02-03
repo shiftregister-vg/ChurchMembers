@@ -60,19 +60,19 @@
                         
                             <tr class="prop">
                                 <td valign="top" class="name">
-                                  <label for="addresses"><g:message code="member.addresses.label" default="Addresses" /></label>
+                                  <label for="gender"><g:message code="member.gender.label" default="Gender" /></label>
                                 </td>
-                                <td valign="top" class="value ${hasErrors(bean: memberInstance, field: 'addresses', 'errors')}">
-                                    <g:select name="addresses" from="${org.stevegood.Address.list()}" multiple="yes" optionKey="id" size="5" value="${memberInstance?.addresses*.id}" />
+                                <td valign="top" class="value ${hasErrors(bean: memberInstance, field: 'gender', 'errors')}">
+                                    <g:select name="gender" from="${org.stevegood.member.Gender?.values()}" keys="${org.stevegood.member.Gender?.values()*.name()}" value="${memberInstance?.gender?.name()}"  />
                                 </td>
                             </tr>
                         
                             <tr class="prop">
                                 <td valign="top" class="name">
-                                  <label for="dateUpdated"><g:message code="member.dateUpdated.label" default="Date Updated" /></label>
+                                  <label for="addresses"><g:message code="member.addresses.label" default="Addresses" /></label>
                                 </td>
-                                <td valign="top" class="value ${hasErrors(bean: memberInstance, field: 'dateUpdated', 'errors')}">
-                                    <g:datePicker name="dateUpdated" precision="day" value="${memberInstance?.dateUpdated}"  />
+                                <td valign="top" class="value ${hasErrors(bean: memberInstance, field: 'addresses', 'errors')}">
+                                    <g:select name="addresses" from="${org.stevegood.Address.list()}" multiple="yes" optionKey="id" size="5" value="${memberInstance?.addresses*.id}" />
                                 </td>
                             </tr>
                         

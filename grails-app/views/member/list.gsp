@@ -30,9 +30,9 @@
                         
                             <g:sortableColumn property="email" title="${message(code: 'member.email.label', default: 'Email')}" />
                         
-                            <g:sortableColumn property="dateCreated" title="${message(code: 'member.dateCreated.label', default: 'Date Created')}" />
+                            <g:sortableColumn property="gender" title="${message(code: 'member.gender.label', default: 'Gender')}" />
                         
-                            <g:sortableColumn property="dateUpdated" title="${message(code: 'member.dateUpdated.label', default: 'Date Updated')}" />
+                            <g:sortableColumn property="dateCreated" title="${message(code: 'member.dateCreated.label', default: 'Date Created')}" />
                         
                         </tr>
                     </thead>
@@ -48,9 +48,9 @@
                         
                             <td>${fieldValue(bean: memberInstance, field: "email")}</td>
                         
-                            <td><g:formatDate date="${memberInstance.dateCreated}" /></td>
+                            <td>${fieldValue(bean: memberInstance, field: "gender")}</td>
                         
-                            <td><g:formatDate date="${memberInstance.dateUpdated}" /></td>
+                            <td><g:formatDate date="${memberInstance.dateCreated}" /></td>
                         
                         </tr>
                     </g:each>

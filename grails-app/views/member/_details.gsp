@@ -1,6 +1,7 @@
 <ul>
 	<li>First Name: <strong>${ member.firstName }</strong></li>
 	<li>Last Name: <strong>${ member.lastName }</strong></li>
+	<li>Gender: <strong>${ member.gender }</strong></li>
 	<li>Date of Birth: <strong>${ member.dob.format('MMMM dd, yyyy') }</strong></li>
 	<li>Email: <strong>${ member.email }</strong></li>
 </ul>
