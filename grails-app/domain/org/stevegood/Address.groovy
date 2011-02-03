@@ -11,6 +11,7 @@ class Address {
     String state
     String zip
     
+	static searchable = true
     static belongsTo = [Member]
     static hasMany = [members:Member]
     

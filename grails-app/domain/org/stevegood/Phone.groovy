@@ -10,6 +10,7 @@ class Phone {
     String extension
     String label
     
+	static searchable = true
     static belongsTo = [Member]
     static hasMany = [members:Member]
     

@@ -13,6 +13,7 @@ class Member {
     Date dateCreated
     Date lastUpdated
     
+	static searchable = true
     static hasMany = [addresses:Address,phones:Phone]
     
     static constraints = {
