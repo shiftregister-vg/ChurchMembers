@@ -86,7 +86,8 @@ class MemberController {
             redirect(action: "list")
         }
     }
-
+	
+	@Secured(['ROLE_ADMIN','ROLE_SUPER_USER'])
     def delete = {
         def memberInstance = memberService.getMember(params.id as int)
         if (memberInstance) {
