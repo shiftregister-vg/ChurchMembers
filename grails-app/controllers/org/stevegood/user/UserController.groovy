@@ -38,11 +38,6 @@ class UserController {
         flash.message = "${user} saved!"
         redirect(action:"show")
     }
-    
-    @Secured(['IS_AUTHENTICATED_FULLY'])
-    def changePassword = {
-        [user:getAuthenticatedUser()]
-    }
 	
 	@Secured(['IS_AUTHENTICATED_FULLY'])
 	def linkMember = {

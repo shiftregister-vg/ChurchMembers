@@ -17,6 +17,22 @@
 			</g:if>
 		</div>
 		
+		<div class="post">
+	    	<h2>Password</h2>
+			<form id="changePasswordForm" method="post" action="${ createLink(action:'edit') }">
+				<ul>
+					<li>
+						<label for="password1">Password</label>
+						<g:passwordField name="password1" />
+					</li>
+					<li>
+						<label for="password2">Repeat Password</label>
+						<g:passwordField name="password2" />
+					</li>
+				</ul>
+				<input type="submit" value="Set Password" />
+			</form>
+	    </div>
 	</div>
 	
 	<div id="sidebar">
@@ -24,7 +40,6 @@
 			<li>
 				<h2>Actions</h2>
 				<ul>
-					<li><g:link action="changePassword">Change Password</g:link></li>
 					<g:if test="${ member }">
 						<li><g:link controller="member" action="editLinked">Edit Member Info</g:link></li>
 						<li><g:link controller="user" action="unlinkMember">Unlink Member Info</g:link></li>
