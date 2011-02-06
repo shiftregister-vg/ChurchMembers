@@ -4,3 +4,4 @@ grails-app/WEB-INF/*
 .settings/*
 .classpath
 .redcar
+*Thumbs.db
