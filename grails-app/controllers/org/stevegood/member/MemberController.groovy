@@ -3,6 +3,7 @@ package org.stevegood.member
 import grails.plugins.springsecurity.Secured
 import grails.plugins.springsecurity.SpringSecurityService
 import org.stevegood.user.UserMember
+import org.stevegood.user.UserService
 
 @Secured(['IS_AUTHENTICATED_FULLY'])
 class MemberController {
@@ -11,6 +12,7 @@ class MemberController {
     
     def memberService
     def springSecurityService
+	def userService
     
     def index = {
         redirect(action: "list", params: params)
@@ -121,9 +123,16 @@ class MemberController {
 	
 	@Secured(['IS_AUTHENTICATED_FULLY'])
 	def saveLinked = {
-		def member = Member.get(UserMember.findByUser(springSecurityService.getCurrentUser()).id) ?: new Member()
-		member.properties = params
-		memberService.saveMember(member)
+		def member
+		if (params?.id){
+			member = Member.get(UserMember.findByUser(springSecurityService.getCurrentUser()).id)
+			member.properties = params
+			memberService.saveMember(member)
+		} else {
+			member = memberService.saveMember(new Member(params))
+			userService.removeMemberFromUser(springSecurityService.getCurrentUser())
+			userService.addMemberToUser(springSecurityService.getCurrentUser(),member)
+		}
 		
 		memberService.removeSpouseFromMember(member)
 		def spouse = Member.get(params?.spouse)
@@ -149,5 +158,10 @@ class MemberController {
 		
 		flash.message = "$member saved!"
 		redirect(action:'editLinked')
+	}
+	
+	@Secured(['IS_AUTHENTICATED_FULLY'])
+	def createLinked = {
+		
 	}
 }

@@ -46,6 +46,9 @@
 					</g:if>
 					<g:else>
 						<li>
+							<g:link controller="member" action="createLinked">Create Member Details</g:link>
+						</li>
+						<li>
 							<g:form action="linkMember">
 								<g:render template="/user/linkMemberFormFields" />
 							</g:form>
