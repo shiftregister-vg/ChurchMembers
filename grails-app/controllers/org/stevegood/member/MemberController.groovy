@@ -19,8 +19,23 @@ class MemberController {
     }
 
     def list = {
-        params.max = Math.min(params.max ? params.int('max') : 10, 100)
-        [memberInstanceList: Member.list(params), memberInstanceTotal: Member.count()]
+        def maleCount = Member.countByGender(Gender.MALE)
+        def femaleCount = Member.countByGender(Gender.FEMALE)
+        def eya = new Date() - (18 * 365)
+        def fya = new Date() - (49 * 365)
+        def minorCount = Member.countByDobGreaterThan(eya)
+        def adultCount = Member.count() - minorCount
+        def overFiftyCount = Member.countByDobLessThan(fya)
+    	params.max = Math.min(params.max ? params.int('max') : 10, 100)
+        [
+        	memberInstanceList: Member.list(params),
+        	memberInstanceTotal: Member.count(),
+        	maleCount:maleCount,
+        	femaleCount:femaleCount,
+        	minorCount:minorCount,
+        	adultCount:adultCount,
+        	overFiftyCount:overFiftyCount
+        ]
     }
 
     def create = {
