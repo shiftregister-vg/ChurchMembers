@@ -30,9 +30,9 @@
 					<g:pieChart
 	       				title="Generations"
 	       				size="${chartSize}"
-	       				labels="${['Minors (' + minorCount + ')','Adults (' + adultCount + ')' ,'Seniors (' + overFiftyCount + ')']}"
+	       				labels="${['Minors (' + minorCount + ')','Adults (' + adultCount + ')' ,'Seniors (' + seniorCount + ')']}"
 	       				colors="${colors}"
-	       				data="${[minorCount,adultCount,overFiftyCount]}"
+	       				data="${[minorCount,adultCount,seniorCount]}"
 	       				dataType="simple" />
 				</div>
 			</div>

@@ -21,11 +21,11 @@ class AdminController {
     	def memberCount = Member.count()
 		def maleCount = Member.countByGender(Gender.MALE)
         def femaleCount = Member.countByGender(Gender.FEMALE)
-        def eya = new Date() - (18 * 365)
-        def fya = new Date() - (49 * 365)
+        def eya = new Date() - 6570 //(18 * 365)
+        def sfya = new Date() - 23360 //(64 * 365)
         def minorCount = Member.countByDobGreaterThan(eya)
-        def overFiftyCount = Member.countByDobLessThan(fya)
-		def adultCount = memberCount - minorCount - overFiftyCount
+        def seniorCount = Member.countByDobLessThan(sfya)
+		def adultCount = memberCount - minorCount - seniorCount
 		[	memberCount:memberCount,
 			userCount:userService.getActiveUserCount(),
 			newestUser:userService.getNewestUser(),
@@ -36,7 +36,7 @@ class AdminController {
         	femaleCount:femaleCount,
         	minorCount:minorCount,
         	adultCount:adultCount,
-        	overFiftyCount:overFiftyCount
+        	seniorCount:seniorCount
 		]
     }
 	
