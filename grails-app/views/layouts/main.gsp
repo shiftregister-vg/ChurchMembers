@@ -49,6 +49,7 @@ Released   : 20071001
 		  		<sec:ifAllGranted roles="ROLE_ADMIN">
 					<li class="${ params.controller == 'member' && params.action == 'create' ? 'current_page_item' : '' }"><g:link controller="member" action="create">Add Member</g:link></li>
 				</sec:ifAllGranted>
+				<li class="${ params.controller == 'member' && (params.action == 'search' || params.action == "searchResults") ? 'current_page_item' : '' }"><g:link controller="member" action="search">Member Search</g:link></li>
 		    </sec:ifLoggedIn>
 		  </ul>
 		</div>

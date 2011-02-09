@@ -22,7 +22,7 @@
 	                        
 	                            <g:sortableColumn property="email" title="${message(code: 'member.email.label', default: 'Email')}" />
 	                        
-	                            <g:sortableColumn property="gender" title="${message(code: 'member.gender.label', default: 'Gender')}" />
+	                            <g:sortableColumn property="dob" title="${message(code: 'member.dob.label', default: 'Date of Birth')}" />
 	                        
 	                        </tr>
 	                    </thead>
@@ -36,7 +36,7 @@
 	                        
 	                            <td><g:link action="show" id="${ memberInstance.id }">${fieldValue(bean: memberInstance, field: "email")}</g:link></td>
 	                        
-	                            <td>${fieldValue(bean: memberInstance, field: "gender")}</td>
+	                            <td><g:formatDate date="${memberInstance.dob}" format="MM/dd/yyyy" /></td>
 	                        </tr>
 	                    </g:each>
 	                    </tbody>
@@ -51,31 +51,12 @@
         <div id="sidebar">
         	<ul>
         		<li>
-        			<h2>Member Stats</h2>
-        			<ul>
-        				<li>Total Members: ${ memberInstanceTotal }</li>
-        			</ul>
-        		</li>
-        		<li>
-        			<g:set var="colors" value="${['000000','333333','999999','CCCCCC','00FF00','0000FF','FF0000']}" />
-        			<g:set var="chartSize" value="${[225,130]}" />
-        			
-        			<g:pieChart
-        				title="Gender"
-        				size="${chartSize}"
-        				labels="${['Male (' + maleCount + ')','Female (' + femaleCount + ')']}"
-        				colors="${colors}"
-        				data="${[maleCount,femaleCount]}"
-        				dataType="simple" />
-        		</li>
-        		<li>
-        			<g:pieChart
-        				title="Ages"
-        				size="${chartSize}"
-        				labels="${['Minors (' + minorCount + ')','Adults (' + adultCount + ')' ,'Seniors (' + overFiftyCount + ')']}"
-        				colors="${colors}"
-        				data="${[minorCount,adultCount,overFiftyCount]}"
-        				dataType="simple" />
+        			<h2>Search</h2>
+					<ul><li>
+						<g:form url='[controller: "member", action: "search"]' id="searchableForm" name="searchableForm" method="get">
+							<g:textField name="q" style="height:20px;width:140px;" /> <input type="image" src="${ resource(dir:'images',file:'search.gif') }" width="25" height="25" alt="Member Search" style="vertical-align:middle;" />
+						</g:form>
+					</li></ul>
         		</li>
         	</ul>
         </div>

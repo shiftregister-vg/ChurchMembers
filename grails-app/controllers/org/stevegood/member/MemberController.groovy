@@ -2,6 +2,7 @@ package org.stevegood.member
 
 import grails.plugins.springsecurity.Secured
 import grails.plugins.springsecurity.SpringSecurityService
+import org.compass.core.engine.SearchEngineQueryParseException
 import org.stevegood.user.UserMember
 import org.stevegood.user.UserService
 
@@ -11,6 +12,7 @@ class MemberController {
     static allowedMethods = [save: "POST", update: "POST", delete: "POST"]
     
     def memberService
+	def searchableService
     def springSecurityService
 	def userService
     
@@ -19,22 +21,10 @@ class MemberController {
     }
 
     def list = {
-        def maleCount = Member.countByGender(Gender.MALE)
-        def femaleCount = Member.countByGender(Gender.FEMALE)
-        def eya = new Date() - (18 * 365)
-        def fya = new Date() - (49 * 365)
-        def minorCount = Member.countByDobGreaterThan(eya)
-        def adultCount = Member.count() - minorCount
-        def overFiftyCount = Member.countByDobLessThan(fya)
     	params.max = Math.min(params.max ? params.int('max') : 10, 100)
         [
         	memberInstanceList: Member.list(params),
-        	memberInstanceTotal: Member.count(),
-        	maleCount:maleCount,
-        	femaleCount:femaleCount,
-        	minorCount:minorCount,
-        	adultCount:adultCount,
-        	overFiftyCount:overFiftyCount
+        	memberInstanceTotal: Member.count()
         ]
     }
 
@@ -47,7 +37,7 @@ class MemberController {
     def save = {
         def memberInstance = new Member(params)
         if (memberService.saveMember(memberInstance)) {
-            flash.message = "${message(code: 'default.created.message', args: [message(code: 'member.label', default: 'Member'), memberInstance.id])}"
+            flash.message = "${message(code: 'default.created.message', args: [message(code: 'member.label', default: memberInstance.toString())])}"
             redirect(action: "show", id: memberInstance.id)
         }
         else {
@@ -62,7 +52,7 @@ class MemberController {
             redirect(action: "list")
         }
         else {
-            [memberInstance: memberInstance]
+            [member: memberInstance]
         }
     }
 
@@ -91,7 +81,7 @@ class MemberController {
             }
             memberInstance.properties = params
             if (!memberInstance.hasErrors() && memberService.saveMember(memberInstance)) {
-                flash.message = "${message(code: 'default.updated.message', args: [message(code: 'member.label', default: 'Member'), memberInstance.id])}"
+                flash.message = "${message(code: 'default.updated.message', args: [message(code: 'member.label', default: memberInstance.toString())])}"
                 redirect(action: "show", id: memberInstance.id)
             }
             else {
@@ -124,7 +114,6 @@ class MemberController {
         }
     }
     
-	@Secured(['IS_AUTHENTICATED_FULLY'])
     def editLinked = {
     	def member = memberService.getMember(springSecurityService.getCurrentUser())
     	if (!member){
@@ -136,11 +125,11 @@ class MemberController {
     	[member:member,memberList:memberService.getEligableSpouses(member),childrenList:memberService.getValidChildren(member),parentsList:memberService.getValidParents(member)]
     }
 	
-	@Secured(['IS_AUTHENTICATED_FULLY'])
 	def saveLinked = {
 		def member
+		println params
 		if (params?.id){
-			member = Member.get(UserMember.findByUser(springSecurityService.getCurrentUser()).id)
+			member = Member.get(UserMember.findByUser(springSecurityService.getCurrentUser()).member.id)
 			member.properties = params
 			memberService.saveMember(member)
 		} else {
@@ -175,8 +164,18 @@ class MemberController {
 		redirect(action:'editLinked')
 	}
 	
-	@Secured(['IS_AUTHENTICATED_FULLY'])
 	def createLinked = {
 		
+	}
+	
+	def search = {
+		if (!params.q?.trim()) {
+            return [:]
+        }
+        try {
+			return [searchResult: searchableService.search(params.q, params)]
+        } catch (SearchEngineQueryParseException ex) {
+            return [parseException: true]
+        }
 	}
 }

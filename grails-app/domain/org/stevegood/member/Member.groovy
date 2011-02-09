@@ -13,7 +13,6 @@ class Member {
     Date dateCreated
     Date lastUpdated
     
-	static searchable = true
     static hasMany = [addresses:Address,phones:Phone]
     
     static constraints = {
@@ -23,6 +22,10 @@ class Member {
 		gender		nullable:false
     }
     
+	static searchable = {
+		spellCheck "include"
+	}
+
     String toString(){
         "$firstName $lastName"
     }

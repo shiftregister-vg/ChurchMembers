@@ -2,6 +2,7 @@ package org.stevegood
 
 import grails.plugins.springsecurity.Secured
 import grails.plugins.springsecurity.SpringSecurityService
+import org.stevegood.member.Gender
 import org.stevegood.member.Member
 import org.stevegood.member.MemberService
 import org.stevegood.registration.RegistrationRequest
@@ -17,12 +18,26 @@ class AdminController {
 	def userService
 	
     def index = {
-    	[	memberCount:Member.count(),
+    	def memberCount = Member.count()
+		def maleCount = Member.countByGender(Gender.MALE)
+        def femaleCount = Member.countByGender(Gender.FEMALE)
+        def eya = new Date() - (18 * 365)
+        def fya = new Date() - (49 * 365)
+        def minorCount = Member.countByDobGreaterThan(eya)
+        def overFiftyCount = Member.countByDobLessThan(fya)
+		def adultCount = memberCount - minorCount - overFiftyCount
+		[	memberCount:memberCount,
 			userCount:userService.getActiveUserCount(),
 			newestUser:userService.getNewestUser(),
 			newestMember:memberService.getNewestMember(),
 			pendingRegistrationRequests:userService.getPendingRegistrationRequests(),
-			pendingRegistrationRequestsCount:RegistrationRequest.countByApprovedAndRejected(false,false)	]
+			pendingRegistrationRequestsCount:RegistrationRequest.countByApprovedAndRejected(false,false),
+			maleCount:maleCount,
+        	femaleCount:femaleCount,
+        	minorCount:minorCount,
+        	adultCount:adultCount,
+        	overFiftyCount:overFiftyCount
+		]
     }
 	
 	@Secured(['ROLE_SUPER_USER'])

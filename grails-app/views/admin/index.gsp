@@ -15,6 +15,26 @@
 					<li><strong><g:link action="editUser" params="[username:newestUser]">${ newestUser }</g:link></strong> is the newest user</li>
 					<li><strong>${ userCount }</strong> users registered</li>
 				</ul>
+				<g:set var="colors" value="009900|333333|000099|999999|990000|CCCCCC" />
+    			<g:set var="chartSize" value="${[275,150]}" />
+    			<div>
+    				<g:pieChart
+	    				title="Gender"
+	    				size="${chartSize}"
+	    				labels="${['Male (' + maleCount + ')','Female (' + femaleCount + ')']}"
+	    				colors="${colors}"
+	    				data="${[maleCount,femaleCount]}"
+	    				dataType="simple" />
+				</div>
+				<div>
+					<g:pieChart
+	       				title="Generations"
+	       				size="${chartSize}"
+	       				labels="${['Minors (' + minorCount + ')','Adults (' + adultCount + ')' ,'Seniors (' + overFiftyCount + ')']}"
+	       				colors="${colors}"
+	       				data="${[minorCount,adultCount,overFiftyCount]}"
+	       				dataType="simple" />
+				</div>
 			</div>
 			
 			<g:if test="${ pendingRegistrationRequests }">

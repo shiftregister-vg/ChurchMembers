@@ -1,4 +1,5 @@
 import grails.util.Environment
+import org.compass.core.engine.SearchEngineQueryParseException
 import org.stevegood.member.Gender
 import org.stevegood.member.MemberService
 import org.stevegood.user.Role
@@ -7,6 +8,7 @@ import org.stevegood.user.UserService
 class BootStrap {
     
 	def memberService
+	def searchableService
     def userService
     
     def init = { servletContext ->
@@ -34,6 +36,8 @@ class BootStrap {
             userService.saveUser(user)
             userService.addMemberToUser(user,chester)
         }
+		
+		searchableService.rebuildSpellingSuggestions()
     }
     def destroy = {
     }
