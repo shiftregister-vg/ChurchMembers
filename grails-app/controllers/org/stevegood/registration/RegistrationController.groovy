@@ -72,7 +72,7 @@ class RegistrationController {
     		
     	// let the user know their request has been received and redirect them to the login page
     	flash.message = "Your registration request has been recorded. You will be notified as soon as your request is approved or denied."
-    	redirect(controller:"login")
+    	redirect(controller:"login",action:"auth")
     }
 	
 	@Secured(['ROLE_ADMIN'])
