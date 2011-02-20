@@ -6,7 +6,7 @@ class Address {
     
     String label
 	String street1
-    String street2
+    String street2 = ""
     String city
     String state
     String zip
@@ -29,6 +29,6 @@ class Address {
     }
     
     String format(){
-        "$street1 $street2, $city, $state $zip"
+        "$street1 $street2".trim() + ", $city, $state $zip"
     }
 }
