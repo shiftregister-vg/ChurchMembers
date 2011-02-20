@@ -12,7 +12,7 @@ class PhoneTests extends GrailsUnitTestCase {
     }
 
     void testFormat() {
-		def phone = new Phone(npa:817,nxx:555,nxxx:1234)
+		def phone = new Phone(label:"Test Phone",npa:817,nxx:555,nxxx:1234)
 		def tValue = "(817) 555-1234"
 		assertEquals(tValue,phone.format())
 		
