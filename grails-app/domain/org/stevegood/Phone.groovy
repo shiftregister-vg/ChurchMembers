@@ -24,6 +24,6 @@ class Phone {
     }
     
     String format(){
-        "($npa) $nxx-$nxxx ${ extension ?: '' }"
+        "($npa) $nxx-$nxxx ${ extension ?: '' }".trim()
     }
 }
