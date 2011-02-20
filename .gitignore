@@ -1,7 +1,9 @@
 .project
 target/*
 grails-app/WEB-INF/*
+web-app/WEB-INF/*
 .settings/*
 .classpath
 .redcar
 *Thumbs.db
+stacktrace.log
