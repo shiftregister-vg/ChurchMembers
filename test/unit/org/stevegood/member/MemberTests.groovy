@@ -11,7 +11,8 @@ class MemberTests extends GrailsUnitTestCase {
         super.tearDown()
     }
 
-    void testSomething() {
-
+    void testToString() {
+		def member = new Member(firstName:"Chester",lastName:"Tester",email:"chester@tester.com",dob:new Date(),gender:Gender.MALE)
+		assertEquals "Chester Tester",member.toString()
     }
 }
