@@ -10,8 +10,4 @@ class AddressControllerTests extends ControllerUnitTestCase {
     protected void tearDown() {
         super.tearDown()
     }
-
-    void testSomething() {
-
-    }
 }

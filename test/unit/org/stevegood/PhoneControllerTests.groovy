@@ -10,8 +10,4 @@ class PhoneControllerTests extends ControllerUnitTestCase {
     protected void tearDown() {
         super.tearDown()
     }
-
-    void testSomething() {
-
-    }
 }

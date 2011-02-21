@@ -10,8 +10,4 @@ class UserControllerTests extends ControllerUnitTestCase {
     protected void tearDown() {
         super.tearDown()
     }
-
-    void testSomething() {
-
-    }
 }

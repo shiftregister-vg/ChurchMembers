@@ -10,8 +10,4 @@ class MemberServiceTests extends GrailsUnitTestCase {
     protected void tearDown() {
         super.tearDown()
     }
-
-    void testSomething() {
-
-    }
 }
