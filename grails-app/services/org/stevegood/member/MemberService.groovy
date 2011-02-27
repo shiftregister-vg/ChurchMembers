@@ -117,15 +117,15 @@ class MemberService {
     }
     
     def saveAddress(Address address){
-        address.save(failOnError:true)
+        address.save(flush:true,failOnError:true)
     }
     
     def saveMember(Member member){
-		member.save(failOnError:true)
+		member.save(flush:true,failOnError:true)
     }
     
     def savePhone(Phone phone){
-        phone.save(failOnError:true)
+        phone.save(flush:true,failOnError:true)
     }
     
 }
