@@ -68,4 +68,54 @@ class MemberServiceTests extends GroovyTestCase {
 		
 		address.delete()
 	}
+	
+	void testCreateMember(){
+		def member = memberService.createMember("Chester","Tester",new Date().parse('yyyy-MM-dd','1979-12-25'),"chester@tester.com",Gender.MALE)
+		assert member
+		
+		assertEquals "Chester",member.firstName
+		assertEquals "Tester",member.lastName
+		
+		member.delete()
+	}
+	
+	void testCreatePhone(){
+		def phone = memberService.createPhone("Test Phone",987,654,3210,"")
+		assert phone
+		
+		assertEquals "Test Phone",phone.label
+		assertEquals 987,phone.npa
+		assertEquals 654,phone.nxx
+		assertEquals 3210,phone.nxxx
+		
+		assertNull phone.extension
+		
+		phone.extension = "x741"
+		phone.save()
+		
+		assertEquals "x741",phone.extension
+		
+		phone.delete()
+	}
+	
+	void testDeleteAddress(){
+		def address = memberService.createAddress("Test Address","123 Maple","","Heresville","TX","76000")
+		assert address
+		
+		memberService.deleteAddress(address)
+	}
+	
+	void testDeleteMember(){
+		def member = memberService.createMember("Chester","Tester",new Date().parse('yyyy-MM-dd','1979-12-25'),"chester@tester.com",Gender.MALE)
+		assert member
+		
+		memberService.deleteMember(member)
+	}
+	
+	void testDeletePhone(){
+		def phone = memberService.createPhone("Test Phone",987,654,3210,"")
+		assert phone
+		
+		memberService.deletePhone(phone)
+	}
 }

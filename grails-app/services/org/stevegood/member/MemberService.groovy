@@ -26,7 +26,7 @@ class MemberService {
     }
     
     def createPhone(String label, int npa, int nxx, int nxxx, String extension){
-        Phone.findWhere(npa:npa,nxx:nxx,nxxx:nxxx,extenstion:extension) ?: savePhone(new Phone(label:label,npa:npa,nxx:nxx,nxxx:nxxx,extension:extension))
+        Phone.findWhere(npa:npa,nxx:nxx,nxxx:nxxx,extension:extension) ?: savePhone(new Phone(label:label,npa:npa,nxx:nxx,nxxx:nxxx,extension:extension))
     }
     
     def deleteAddress(Address address){
