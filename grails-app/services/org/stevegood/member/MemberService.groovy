@@ -18,7 +18,7 @@ class MemberService {
     }
     
     def createAddress(String label, String street1, String street2 = "", String city, String state, String zip){
-        Address.findWhere(street1:street1,street2:street2,city:city,state:state,zip:zip) ?: saveAddress(new Address(street1:street1,street2:street2,city:city,state:state,zip:zip))
+        Address.findWhere(label:label,street1:street1,street2:street2,city:city,state:state,zip:zip) ?: saveAddress(new Address(label:label,street1:street1,street2:street2,city:city,state:state,zip:zip))
     }
     
     def createMember(String firstName, String lastName, Date dob, String email,Gender gender) {
@@ -117,7 +117,7 @@ class MemberService {
     }
     
     def saveAddress(Address address){
-        address.save()
+        address.save(failOnError:true)
     }
     
     def saveMember(Member member){
@@ -125,7 +125,7 @@ class MemberService {
     }
     
     def savePhone(Phone phone){
-        phone.save()
+        phone.save(failOnError:true)
     }
     
 }

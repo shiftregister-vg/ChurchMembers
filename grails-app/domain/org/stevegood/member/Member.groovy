@@ -18,7 +18,7 @@ class Member {
     static constraints = {
         firstName   blank:false
         lastName    blank:false
-        email       blank:true,email:true
+        email       blank:true,email:true,nullable:true
 		gender		nullable:false
     }
     
